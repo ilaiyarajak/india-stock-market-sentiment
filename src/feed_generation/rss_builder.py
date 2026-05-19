@@ -1,4 +1,5 @@
 import os
+import json
 from datetime import datetime, timezone
 from feedgen.feed import FeedGenerator
 from typing import List, Dict
@@ -22,6 +23,16 @@ class RSSBuilder:
         now = datetime.now(timezone.utc)
         fg.pubDate(now)
 
+        history_path = os.path.join(self.output_dir, "history.json")
+        history = []
+        if os.path.exists(history_path):
+            try:
+                with open(history_path, 'r') as f:
+                    history = json.load(f)
+            except Exception as e:
+                logger.error(f"Failed to load history: {e}")
+                history = []
+
         valid_sentiments = [sentiments[a.id] for a in articles if a.id in sentiments]
         
         if valid_sentiments:
@@ -34,11 +45,6 @@ class RSSBuilder:
             else:
                 agg_category = "Neutral"
 
-            fe = fg.add_entry()
-            fe.id(f"aggregate-{now.strftime('%Y%m%d%H%M%S')}")
-            fe.title(f"Market Sentiment: {agg_category} ({avg_score:.2f}/100)")
-            fe.link(href='https://github.com/ilaiya/india-stock-market-sentiment')
-            
             description_lines = [
                 f"Overall Market Sentiment based on {len(valid_sentiments)} sources.<br/>",
                 f"Aggregated Score: {avg_score:.2f}/100<br/>",
@@ -55,9 +61,42 @@ class RSSBuilder:
                 description_lines.append(f"<li>{src}: {count} articles</li>")
             description_lines.append("</ul>")
             
-            fe.description("".join(description_lines))
-            fe.pubDate(now)
+            pubdate_prefix = now.strftime('%Y-%m-%d %H:%M UTC')
+            plain_desc = f"Overall Market Sentiment based on {len(valid_sentiments)} sources. Aggregated Score: {avg_score:.2f}/100. Category: {agg_category}. Source Breakdown: " + ", ".join([f"{src}: {count} articles" for src, count in source_counts.items()])
+            
+            new_entry = {
+                "id": f"aggregate-{now.strftime('%Y%m%d%H%M%S')}",
+                "title": f"[{pubdate_prefix}] Market Sentiment: {agg_category} ({avg_score:.2f}/100) - {plain_desc}",
+                "link": 'https://github.com/ilaiya/india-stock-market-sentiment',
+                "description": "".join(description_lines),
+                "pubDate": now.isoformat()
+            }
+            history.append(new_entry)
+
+        # Keep only the last 30 entries
+        history = history[-30:]
+
+        # Save history back to disk
+        try:
+            with open(history_path, 'w') as f:
+                json.dump(history, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save history: {e}")
+
+        # Add items to feed generator (newest first for standard RSS display, or oldest first if preferred;
+        # feedgen typically adds them as they come, so let's reverse to put newest at the top)
+        for item in reversed(history):
+            fe = fg.add_entry()
+            fe.id(item["id"])
+            fe.title(item["title"])
+            fe.link(href=item["link"])
+            fe.description(item["description"])
+            try:
+                item_date = datetime.fromisoformat(item["pubDate"])
+                fe.pubDate(item_date)
+            except ValueError:
+                fe.pubDate(now)
 
         output_path = os.path.join(self.output_dir, filename)
         fg.rss_file(output_path)
-        logger.info(f"Successfully generated aggregated RSS feed at {output_path}.")
+        logger.info(f"Successfully generated aggregated RSS feed at {output_path} with {len(history)} items.")

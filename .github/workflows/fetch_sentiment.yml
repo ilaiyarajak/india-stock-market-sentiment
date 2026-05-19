@@ -39,11 +39,11 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add data/feeds/sentiment_rss.xml
+          git add data/feeds/sentiment_rss.xml data/feeds/history.json
           
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Auto-update sentiment RSS feed"
+            git commit -m "Auto-update sentiment RSS feed and history"
             git push
           fi
