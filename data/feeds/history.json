@@ -84,5 +84,13 @@
         "description": "Overall Market Sentiment based on 49 sources. Aggregated Score: 56.83/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
         "content": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 56.83/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
         "pubDate": "2026-05-21T18:07:23.461336+00:00"
+    },
+    {
+        "id": "aggregate-20260521181252",
+        "title": "[2026-05-21 18:12 UTC] Market Sentiment: Neutral (56.83/100)",
+        "link": "entries/aggregate-20260521181252.html",
+        "description": "Overall Market Sentiment based on 49 sources. Aggregated Score: 56.83/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
+        "content": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 56.83/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
+        "pubDate": "2026-05-21T18:12:52.223572+00:00"
     }
 ]
