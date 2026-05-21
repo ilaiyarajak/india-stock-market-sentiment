@@ -86,7 +86,6 @@ class RSSBuilder:
 </head>
 <body>
     <h2>Market Sentiment: {agg_category} ({avg_score:.2f}/100)</h2>
-    <p><strong>Date:</strong> {pubdate_prefix}</p>
     <div>
         {''.join(description_lines)}
     </div>
@@ -99,7 +98,7 @@ class RSSBuilder:
 
             new_entry = {
                 "id": entry_id,
-                "title": f"[{pubdate_prefix}] Market Sentiment: {agg_category} ({avg_score:.2f}/100)",
+                "title": f"Market Sentiment: {agg_category} ({avg_score:.2f}/100)",
                 "link": html_rel_link,
                 "description": plain_desc,
                 "content": "".join(description_lines),
