@@ -140,7 +140,8 @@ class RSSBuilder:
             entry_id = f"aggregate-{now.strftime('%Y%m%d%H%M%S')}"
             html_filename = f"{entry_id}.html"
             html_path = os.path.join(html_dir, html_filename)
-            html_rel_link = f"entries/{html_filename}"
+            # Use absolute URL for RSS entry link
+            html_abs_link = f"https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/{html_filename}"
 
             # Write HTML file for this entry
             try:
@@ -166,7 +167,7 @@ class RSSBuilder:
             new_entry = {
                 "id": entry_id,
                 "title": f"Market Sentiment: {agg_category} ({avg_score:.2f}/100)",
-                "link": html_rel_link,
+                "link": html_abs_link,
                 "description": plain_desc,
                 "content": "".join(description_lines),
                 "pubDate": now.isoformat()
@@ -189,7 +190,7 @@ class RSSBuilder:
             fe = fg.add_entry()
             fe.id(item["id"])
             fe.title(item["title"])
-            # Use the relative HTML link for each entry
+            # Use the absolute HTML link for each entry
             fe.link(href=item["link"])
             
             if "content" in item:
