@@ -18,12 +18,16 @@ class RSSBuilder:
         fg = FeedGenerator()
         fg.title('Indian Stock Market Sentiment')
         fg.link(href='https://github.com/ilaiya/india-stock-market-sentiment', rel='alternate')
+        fg.link(href='https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/sentiment_rss.xml', rel='self')
         fg.description('Automated sentiment analysis of Indian stock market news and Reddit discussions.')
         fg.language('en')
         now = datetime.now(timezone.utc)
         fg.pubDate(now)
 
         history_path = os.path.join(self.output_dir, "history.json")
+        html_dir = os.path.join(self.output_dir, "entries")
+        os.makedirs(html_dir, exist_ok=True)
+
         history = []
         if os.path.exists(history_path):
             try:
@@ -56,7 +60,6 @@ class RSSBuilder:
             for article in articles:
                 if article.id in sentiments:
                     source_counts[article.source] = source_counts.get(article.source, 0) + 1
-                    
             for src, count in source_counts.items():
                 description_lines.append(f"<li>{src}: {count} articles</li>")
             description_lines.append("</ul>")
@@ -64,11 +67,38 @@ class RSSBuilder:
             pubdate_prefix = now.strftime('%Y-%m-%d %H:%M UTC')
             plain_desc = f"Overall Market Sentiment based on {len(valid_sentiments)} sources. Aggregated Score: {avg_score:.2f}/100. Category: {agg_category}. Source Breakdown: " + ", ".join([f"{src}: {count} articles" for src, count in source_counts.items()])
             
+            entry_id = f"aggregate-{now.strftime('%Y%m%d%H%M%S')}"
+            html_filename = f"{entry_id}.html"
+            html_path = os.path.join(html_dir, html_filename)
+            html_rel_link = f"entries/{html_filename}"
+
+            # Write HTML file for this entry
+            try:
+                with open(html_path, "w") as html_file:
+                    html_file.write(f"""<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <title>Market Sentiment: {agg_category} ({avg_score:.2f}/100)</title>
+</head>
+<body>
+    <h2>Market Sentiment: {agg_category} ({avg_score:.2f}/100)</h2>
+    <p><strong>Date:</strong> {pubdate_prefix}</p>
+    <div>
+        {''.join(description_lines)}
+    </div>
+</body>
+</html>
+""")
+            except Exception as e:
+                logger.error(f"Failed to write HTML entry file: {e}")
+
             new_entry = {
-                "id": f"aggregate-{now.strftime('%Y%m%d%H%M%S')}",
-                "title": f"[{pubdate_prefix}] Market Sentiment: {agg_category} ({avg_score:.2f}/100) - {plain_desc}",
-                "link": 'https://github.com/ilaiya/india-stock-market-sentiment',
-                "description": "".join(description_lines),
+                "id": entry_id,
+                "title": f"[{pubdate_prefix}] Market Sentiment: {agg_category} ({avg_score:.2f}/100)",
+                "link": html_rel_link,
+                "description": plain_desc,
+                "content": "".join(description_lines),
                 "pubDate": now.isoformat()
             }
             history.append(new_entry)
@@ -89,8 +119,16 @@ class RSSBuilder:
             fe = fg.add_entry()
             fe.id(item["id"])
             fe.title(item["title"])
+            # Use the relative HTML link for each entry
             fe.link(href=item["link"])
-            fe.description(item["description"])
+            
+            if "content" in item:
+                fe.description(item["description"])
+                fe.content(item["content"], type="CDATA")
+            else:
+                fe.description(item["description"])
+                fe.content(item["description"], type="CDATA")
+            
             try:
                 item_date = datetime.fromisoformat(item["pubDate"])
                 fe.pubDate(item_date)
