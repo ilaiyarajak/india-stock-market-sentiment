@@ -7,6 +7,73 @@ from src.models.article import Article
 from src.models.sentiment import Sentiment
 from src.utils.logger import get_logger
 
+from src.feed_generation.fetch_articles import fetch_articles_from_rss
+
+logger = get_logger(__name__)
+
+class RSSBuilder:
+    def __init__(self, output_dir: str = "data/feeds"):
+        self.output_dir = output_dir
+        os.makedirs(self.output_dir, exist_ok=True)
+
+    def build_feed(self, articles: List[Article], sentiments: Dict[str, Sentiment], filename: str = "sentiment_rss.xml"):
+        fg = FeedGenerator()
+        fg.title('Indian Stock Market Sentiment')
+        fg.link(href='https://github.com/ilaiya/india-stock-market-sentiment', rel='alternate')
+        fg.link(href='https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/sentiment_rss.xml', rel='self')
+        fg.description('Automated sentiment analysis of Indian stock market news and Reddit discussions.')
+        fg.language('en')
+        now = datetime.now(timezone.utc)
+        fg.pubDate(now)
+
+        history_path = os.path.join(self.output_dir, "history.json")
+        html_dir = os.path.abspath(os.path.join(self.output_dir, "entries"))
+        try:
+            os.makedirs(html_dir, exist_ok=True)
+        except Exception as e:
+            logger.error(f"Failed to create entries directory at {html_dir}: {e}")
+
+        history = []
+        if os.path.exists(history_path):
+            try:
+                with open(history_path, 'r') as f:
+                    history = json.load(f)
+            except Exception as e:
+                logger.error(f"Failed to load history: {e}")
+                history = []
+
+        valid_sentiments = [sentiments[a.id] for a in articles if a.id in sentiments]
+        # ... rest of the class ...
+
+# Place the main block at the end so RSSBuilder is defined
+if __name__ == "__main__":
+    # Example feed URLs (add or modify as needed)
+    feed_urls = [
+        "https://news.google.com/rss/search?q=indian+stock+market",
+        "https://www.oilprice.com/rss/main",
+        "https://www.geopoliticalmonitor.com/feed/",
+        # Add more feeds as needed
+    ]
+
+    # Fetch articles from all feeds
+    articles = fetch_articles_from_rss(feed_urls)
+
+    # Dummy sentiment analysis (replace with your real sentiment logic)
+    from src.models.sentiment import Sentiment
+    sentiments = {a.id: Sentiment(score=50) for a in articles}  # Replace with real scoring
+
+    # Build the RSS feed
+    builder = RSSBuilder(output_dir="data/feeds")
+    builder.build_feed(articles, sentiments)
+import os
+import json
+from datetime import datetime, timezone
+from feedgen.feed import FeedGenerator
+from typing import List, Dict
+from src.models.article import Article
+from src.models.sentiment import Sentiment
+from src.utils.logger import get_logger
+
 logger = get_logger(__name__)
 
 class RSSBuilder:
