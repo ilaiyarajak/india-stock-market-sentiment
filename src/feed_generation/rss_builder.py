@@ -25,8 +25,11 @@ class RSSBuilder:
         fg.pubDate(now)
 
         history_path = os.path.join(self.output_dir, "history.json")
-        html_dir = os.path.join(self.output_dir, "entries")
-        os.makedirs(html_dir, exist_ok=True)
+        html_dir = os.path.abspath(os.path.join(self.output_dir, "entries"))
+        try:
+            os.makedirs(html_dir, exist_ok=True)
+        except Exception as e:
+            logger.error(f"Failed to create entries directory at {html_dir}: {e}")
 
         history = []
         if os.path.exists(history_path):
@@ -90,8 +93,9 @@ class RSSBuilder:
 </body>
 </html>
 """)
+                logger.info(f"Wrote HTML entry file: {html_path}")
             except Exception as e:
-                logger.error(f"Failed to write HTML entry file: {e}")
+                logger.error(f"Failed to write HTML entry file at {html_path}: {e}")
 
             new_entry = {
                 "id": entry_id,
