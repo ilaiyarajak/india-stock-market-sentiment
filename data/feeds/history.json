@@ -148,5 +148,13 @@
         "description": "Overall Market Sentiment based on 48 sources. Aggregated Score: 55.12/100. Category: Neutral. Source Breakdown: Google News: 48 articles",
         "content": "Overall Market Sentiment based on 48 sources.<br/>Aggregated Score: 55.12/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 48 articles</li></ul>",
         "pubDate": "2026-05-22T19:26:52.476698+00:00"
+    },
+    {
+        "id": "aggregate-20260523022948",
+        "title": "Market Sentiment: Neutral (53.91/100)",
+        "link": "https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/aggregate-20260523022948.html",
+        "description": "Overall Market Sentiment based on 48 sources. Aggregated Score: 53.91/100. Category: Neutral. Source Breakdown: Google News: 48 articles",
+        "content": "Overall Market Sentiment based on 48 sources.<br/>Aggregated Score: 53.91/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 48 articles</li></ul>",
+        "pubDate": "2026-05-23T02:29:48.026731+00:00"
     }
 ]
