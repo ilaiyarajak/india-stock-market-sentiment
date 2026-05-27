@@ -1,12 +1,5 @@
 [
     {
-        "id": "aggregate-20260521092726",
-        "title": "[2026-05-21 09:27 UTC] Market Sentiment: Neutral (57.67/100) - Overall Market Sentiment based on 49 sources. Aggregated Score: 57.67/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
-        "link": "https://github.com/ilaiya/india-stock-market-sentiment",
-        "description": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 57.67/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
-        "pubDate": "2026-05-21T09:27:26.136709+00:00"
-    },
-    {
         "id": "aggregate-20260521145111",
         "title": "[2026-05-21 14:51 UTC] Market Sentiment: Neutral (54.96/100) - Overall Market Sentiment based on 49 sources. Aggregated Score: 54.96/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
         "link": "https://github.com/ilaiya/india-stock-market-sentiment",
@@ -235,5 +228,13 @@
         "description": "Overall Market Sentiment based on 50 sources. Aggregated Score: 51.96/100. Category: Neutral. Source Breakdown: Google News: 50 articles",
         "content": "Overall Market Sentiment based on 50 sources.<br/>Aggregated Score: 51.96/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 50 articles</li></ul>",
         "pubDate": "2026-05-27T02:47:48.090307+00:00"
+    },
+    {
+        "id": "aggregate-20260527093523",
+        "title": "Market Sentiment: Neutral (52.86/100)",
+        "link": "https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/aggregate-20260527093523.html",
+        "description": "Overall Market Sentiment based on 49 sources. Aggregated Score: 52.86/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
+        "content": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 52.86/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
+        "pubDate": "2026-05-27T09:35:23.848883+00:00"
     }
 ]
