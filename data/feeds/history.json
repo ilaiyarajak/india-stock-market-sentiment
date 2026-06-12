@@ -1,13 +1,5 @@
 [
     {
-        "id": "aggregate-20260604144419",
-        "title": "Market Sentiment: Neutral (49.23/100)",
-        "link": "https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/aggregate-20260604144419.html",
-        "description": "Overall Market Sentiment based on 50 sources. Aggregated Score: 49.23/100. Category: Neutral. Source Breakdown: Google News: 50 articles",
-        "content": "Overall Market Sentiment based on 50 sources.<br/>Aggregated Score: 49.23/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 50 articles</li></ul>",
-        "pubDate": "2026-06-04T14:44:19.362009+00:00"
-    },
-    {
         "id": "aggregate-20260604195721",
         "title": "Market Sentiment: Neutral (49.48/100)",
         "link": "https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/aggregate-20260604195721.html",
@@ -238,5 +230,13 @@
         "description": "Overall Market Sentiment based on 49 sources. Aggregated Score: 46.70/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
         "content": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 46.70/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
         "pubDate": "2026-06-11T20:12:40.760052+00:00"
+    },
+    {
+        "id": "aggregate-20260612025349",
+        "title": "Market Sentiment: Neutral (49.65/100)",
+        "link": "https://ilaiya.github.io/india-stock-market-sentiment/data/feeds/entries/aggregate-20260612025349.html",
+        "description": "Overall Market Sentiment based on 49 sources. Aggregated Score: 49.65/100. Category: Neutral. Source Breakdown: Google News: 49 articles",
+        "content": "Overall Market Sentiment based on 49 sources.<br/>Aggregated Score: 49.65/100<br/>Category: Neutral<br/><br/><h3>Source Breakdown:</h3><ul><li>Google News: 49 articles</li></ul>",
+        "pubDate": "2026-06-12T02:53:49.570897+00:00"
     }
 ]
