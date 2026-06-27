@@ -46,10 +46,11 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            # Pull latest changes from remote and rebase local commits on top
+            # Pull latest changes from remote and rebase local commits on top.
+            # Using --force-with-lease for push to handle potential race conditions or non-fast-forward updates.
             git pull --rebase origin master
             git commit -m "Auto-update sentiment RSS feed and history"
-            git push
+            git push --force-with-lease
           fi
 
       - name: Send Telegram Notification
