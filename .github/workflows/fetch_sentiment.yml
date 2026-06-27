@@ -46,6 +46,8 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
+            # Pull latest changes from remote and rebase local commits on top
+            git pull --rebase origin master
             git commit -m "Auto-update sentiment RSS feed and history"
             git push
           fi
