@@ -1,7 +1,7 @@
 import os
 import logging
 from src.config.settings import settings
-from src.InitialDoc.telegram_notifier import TelegramNotifier # Assuming telegram_notifier.py is moved to src/utils
+from src.utils.telegram_notifier import TelegramNotifier
 
 logger = logging.getLogger(__name__)
 
