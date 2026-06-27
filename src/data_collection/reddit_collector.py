@@ -2,21 +2,21 @@ import praw
 from typing import List
 from datetime import datetime
 from src.models.article import Article
-from src.config.settings import Settings
+from src.config.settings import settings
 from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
 class RedditCollector:
     def __init__(self):
-        if not Settings.REDDIT_CLIENT_ID or not Settings.REDDIT_CLIENT_SECRET:
+        if not settings.REDDIT_CLIENT_ID or not settings.REDDIT_CLIENT_SECRET:
             logger.warning("Reddit credentials missing. Collector will return empty results.")
             self.reddit = None
         else:
             self.reddit = praw.Reddit(
-                client_id=Settings.REDDIT_CLIENT_ID,
-                client_secret=Settings.REDDIT_CLIENT_SECRET,
-                user_agent=Settings.REDDIT_USER_AGENT
+                client_id=settings.REDDIT_CLIENT_ID,
+                client_secret=settings.REDDIT_CLIENT_SECRET,
+                user_agent=settings.REDDIT_USER_AGENT
             )
         self.subreddits = ["Indian_stock_market", "NSEIndia", "IndianStocks", "DalalStreetTalks"]
 
