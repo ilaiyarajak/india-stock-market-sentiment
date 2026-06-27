@@ -19,6 +19,9 @@ class AppSettings:
     REDDIT_CLIENT_SECRET: str = os.getenv("REDDIT_CLIENT_SECRET", "")
     REDDIT_USER_AGENT: str = os.getenv("REDDIT_USER_AGENT", "python:in.stock.sentiment.githubactions:v1.0")
 
+    # Logging configuration
+    LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
+
     # Add other application-specific settings here
 
 # Instantiate the settings object to make it importable as 'settings'

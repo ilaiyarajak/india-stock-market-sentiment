@@ -34,6 +34,7 @@ jobs:
           REDDIT_USER_AGENT: "python:in.stock.sentiment.githubactions:v1.0"
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          LOG_LEVEL: "INFO"
         run: |
           python src/main.py
 
