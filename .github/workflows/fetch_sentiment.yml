@@ -32,6 +32,8 @@ jobs:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_USER_AGENT: "python:in.stock.sentiment.githubactions:v1.0"
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python src/main.py
 
@@ -47,3 +49,11 @@ jobs:
             git commit -m "Auto-update sentiment RSS feed and history"
             git push
           fi
+
+      - name: Send Telegram Notification
+        if: success() || failure() # Send notification on success or failure
+        run: |
+          python -c "from src.utils.notifier import send_telegram_notification; send_telegram_notification('Market sentiment pipeline run completed. Status: ${{ job.status }}')"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
